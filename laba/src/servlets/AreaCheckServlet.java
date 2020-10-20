@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AreaCheckServlet extends HttpServlet {
     @Override
@@ -19,6 +22,9 @@ public class AreaCheckServlet extends HttpServlet {
         double x = Double.parseDouble(req.getParameter("X_f"));
         double y = Double.parseDouble(req.getParameter("Y_f"));
         double r = Double.parseDouble(req.getParameter("R_f"));
+        if (!checking(x, y, r)){
+            getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+        }
         Check check = new Check(x, y, r);
         check.setResult(checkingTheArea(x, y, r));
         clock.stop();
@@ -60,7 +66,13 @@ public class AreaCheckServlet extends HttpServlet {
                 "    <td colspan=\"2\">\n" +
                 "      <div class=\"main-table\">\n" +
                 "<p class='the_result'>" +
-                result + "</p>" + "<form action=\"controllerServlet\">\n" +
+                "<table align=\"center\" class='the_result'>\n" +
+                "    <tr>\n" +
+                "        <th class=\"variable\">X=" + check.getX() + "</th>\n" +
+                "        <th class=\"variable\">Y=" + check.getY() + "</th>\n" +
+                "        <th class=\"variable\">R=" + check.getY() + "</th>\n" +
+                "        <th>Result " + result + "</th>\n" +
+                "    </tr>" + "</p>" + "<form action=\"controllerServlet\">\n" +
                 "<button class=\"back_button\" type=\"submit\">Take me back.</button>\n" +
                 "</form>\n" +
                 "      </div>\n" +
@@ -75,8 +87,12 @@ public class AreaCheckServlet extends HttpServlet {
     }
 
     public boolean checkingTheArea(double x, double y, double r) {
-        return ((x >= -r) && (x <= 0) && (y >= 0) && (y <= r) && (x * x + y * y == r * r)) ||
-                ((x >= -r) && (x <= 0) && (y >= -r) && (y <= 0)) ||
+        return ((x >= -r) && (x <= 0) && (y >= 0) && (y <= r) && (x * x + y * y <= r * r)) ||
+                ((x >= -r / 2) && (x <= 0) && (y >= -r) && (y <= 0)) ||
                 ((x >= 0) && (x <= r) && (y >= -r) && (y <= 0) && (y >= x - r));
+    }
+
+    public boolean checking(double x, double y, double r) {
+        return (x >= -3) && (x <= 5) && (y > -3) && (y < 5) && (r >= -1) && (r <= 5);
     }
 }

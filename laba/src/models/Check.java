@@ -1,5 +1,7 @@
 package models;
 
+import models.Clock;
+
 import java.io.Serializable;
 
 public class Check implements Serializable {

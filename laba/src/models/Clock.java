@@ -9,15 +9,14 @@ public class Clock {
 
     public Clock() {
         this.date = new Date().toString();
-        this.start = 0.0;
     }
 
     public void start() {
-        this.start = (double) System.currentTimeMillis();
+        this.start = (double) System.currentTimeMillis()*100000;
     }
 
     public void stop() {
-        this.end = (double) System.currentTimeMillis() - this.start;
+        this.end = (double) System.currentTimeMillis()*100000 - this.start;
     }
 
     public String getDate() {

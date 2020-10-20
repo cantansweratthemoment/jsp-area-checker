@@ -1,4 +1,3 @@
-<%@ page import="models.CheckList" %>
 <%@ page import="models.TableMaker" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
@@ -6,6 +5,7 @@
   <meta charset="UTF-8">
   <title>web_laba2</title>
   <link rel="stylesheet" href="main.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 </head>
 <body onload="drawCanvas()">
 <script src="canvas.js"></script>
@@ -18,8 +18,8 @@
   </th>
   <tr>
     <td>
-      <%String%>
-      <canvas id="canvas" onclick="canvasWasClicked(this)"></canvas>
+      <div id="masloo">
+      <canvas id="canvas"></canvas></div>
     </td>
     <td>
       <p class="main-table" id="enter-text">Enter values.</p>
@@ -56,10 +56,7 @@
   </tr>
   <tr>
     <td colspan="2">
-      <table align="center" class="not-main-table">
-        <% if ((getServletConfig().getServletContext().getAttribute("answerList"))!=null){
-          TableMaker.createTable((CheckList) getServletConfig().getServletContext().getAttribute("answerList"));}%>
-      </table
+      <%=TableMaker.createTable(getServletConfig().getServletContext().getAttribute("answerList"))%>
     </td>
   </tr>
 </table>
